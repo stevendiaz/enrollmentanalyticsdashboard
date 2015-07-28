@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DE SMB Enrollment Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="../../assets/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/css/keen-dashboards.css" />
+  <link href="../stylesheets/CalendarControl.css" rel="stylesheet" type="text/css">
+</head>
+<body class="application">
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="navbar-brand" href="./">DEB Enrollment Dashboard</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="https://www.business.directenergy.com/">Direct Energy Business</a></li>
+          <li><a href="https://keen.io/docs/">Keen Documentation</a></li>
+          <li><a href="https://github.com/keenlabs/dashboards/tree/gh-pages/layouts/two-and-one">Source</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-sm-6 col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Enrollments by vendor
+          </div>
+          <div class="chart-stage" id="chart-01">
+          </div>
+          <div class="chart-notes">
+            Insert chart description here. 
+          </div>
+        </div>
+      </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            1Cell Title
+          </div>
+          <div class="chart-stage">
+            <div id="grid-1-1">
+              <img data-src="holder.js/100%x180/white/text:#grid-1-1">
+            </div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            2Cell Title
+          </div>
+          <div class="chart-stage">
+            <img data-src="holder.js/100%x180/white">
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            3Cell Title
+          </div>
+          <div class="chart-stage">
+            <img data-src="holder.js/100%x180/white">
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            4Cell Title
+          </div>
+          <div class="chart-stage">
+            <img data-src="holder.js/100%x180/white">
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            <select id="timelist" onchange="selectlist()">
+              <option>Minutely</option>
+              <option>Hourly</option>
+              <option>Daily</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+              <option>Yearly</option>
+            </select>
+            <div class="date-start-select">
+              <input name="todays_date" onfocus="showCalendarControl(this);" type ="text">
+            </div>
+          </div>
+          <div class="chart-stage" id="chart-03">
+          </div>
+          <div class="chart-notes">
+            Insert chart description here. 
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+
+    <p class="small text-muted">Built with &#9829; by <a href="https://keen.io">Keen IO</a></p>
+
+  </div>
+
+
+  <script type="text/javascript" src="../../assets/lib/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../../assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="../../assets/lib/holderjs/holder.js"></script>
+  <script>
+    Holder.add_theme("white", { background:"#fff", foreground:"#a7a7a7", size:10 });
+  </script>
+
+  <script type="text/javascript" src="../../assets/lib/keen-js/dist/keen.min.js"></script>
+  <script type="text/javascript" src="../../assets/js/meta.js"></script>
+  <script type="text/javascript" src="../../layouts/two-and-one/scripts/CalendarControl.js"></script>
+<script>
+var client = new Keen({
+  projectId: "55a818a346f9a76020f5232c",
+  readKey: "7098cd39ac668d7ab67d448d7b71210cc94bd40467b941fc9157e9dbde1ca1507e14a3d76d15554b16fa1982ccb93b0b239811c35b2404f6065b85cd3144534eabd71d07a6bbcb1271bc2726634eb865bf79a98c5ca09255935e13836b13d188d0f61393857a7cce8f1209abf27a5014"
+});
+
+Keen.ready(function(){
+
+
+  var enrollments_time = new Keen.Query("count", {
+    eventCollection: "enrollments",
+    interval: "hourly",
+    timeframe: "this_2_days",
+    timezone: "UTC"
+  });
+  
+  client.draw(enrollments_time, document.getElementById("chart-03"), {
+    chartType: "linechart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "80%"
+      },
+      isStacked: true
+    }
+  });
+
+  var pageviews_static = new Keen.Query("count", {
+    eventCollection: "enrollments",
+    groupBy: "BillingAddress.State",
+    timeframe: {
+      start: "2014-05-01T00:00:00.000Z",
+      end: "2015-07-22T00:00:00.000Z"
+    }
+  });
+  client.draw(pageviews_static, document.getElementById("chart-02"), {
+    chartType: "piechart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      },
+      pieHole: .4
+    }
+  });
+
+
+  var enrollments_vendorid = new Keen.Query("count", {
+    eventCollection: "enrollments",
+    groupBy: "CompanyDetails.VendorId",
+    targetProperty: "CompanyDetails.VendorId",
+    timeframe: "this_2_days",
+    timezone: "UTC"
+  });
+  
+  client.draw(enrollments_vendorid, document.getElementById("chart-01"), {
+    chartType: "piechart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      },
+      pieHole: .4
+    }
+  });
+
+});
+
+function selectlist() {
+  var time = document.getElementById("timelist");
+  updateGraph(time.options[time.selectedIndex].text);
+}
+
+function updateGraph(x) {
+  var timeinterval = x.toLowerCase();
+  //alert(timeinterval);
+
+  Keen.ready(function() {
+    //alert(timeinterval + " asdf");
+    var query = new Keen.Query("count", {
+      eventCollection: "enrollments",
+      interval: timeinterval,
+      timeframe: "this_2_days",
+      timezone: "UTC"
+    });
+
+    client.draw(query, document.getElementById("chart-03"), {
+      chartType: "linechart",
+      title: false,
+      height: 250,
+      width: "auto",
+      chartOptions: {
+        chartArea: {
+          height: "85%",
+          left: "5%",
+          top: "5%",
+          width: "80%"
+        },
+        isStacked: true
+      }
+    });
+
+  });
+
+}
+</script>
+</body>
+</html>
