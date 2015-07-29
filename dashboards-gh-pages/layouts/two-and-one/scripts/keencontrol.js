@@ -146,8 +146,11 @@ Keen.ready(function(){
 
 });
 
-
-
+function submitForm() {
+  var vendor = document.getElementById("vendor-input").value;
+  var source = document.getElementById("source-input").value;
+  var startdate = document.getElementById("start-date").value
+}
 
 
 function selectlist() {
@@ -157,10 +160,10 @@ function selectlist() {
 
 function updateGraph(x) {
   var timeinterval = x.toLowerCase();
-  //alert(timeinterval);
+  alert(timeinterval);
 
   Keen.ready(function() {
-    //alert(timeinterval + " asdf");
+    alert(timeinterval + " asdf");
     var query = new Keen.Query("count", {
       eventCollection: "enrollments",
       interval: timeinterval,

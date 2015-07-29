@@ -109,9 +109,10 @@
         <div class="chart-wrapper">
           <div class="chart-title">
             <div class="row">
+              <form id="query-builder"></form>
               <div class="col-sm-1">
                 <label for="time-frame">Time Frame:</label>
-                <select id="timelist" onchange="selectlist()">
+                <select id="timelist" form="query-builder">
                   <option>Minutely</option>
                   <option>Hourly</option>
                   <option>Daily</option>
@@ -121,20 +122,18 @@
                 </select>
               </div> 
               <div class="col-sm-2">               
-                <form method="post">
-                  <label for="todays-date">Start Date:</label>
-                  <input id="todays-date" name="todays_date" onfocus="showCalendarControl(this);" size="8" type="text">
-                </form>
+                <label for="todays-date">Start Date:</label>
+                <input id="start-date" form="query-builder" name="todays_date" size="8" type="text" onfocus="showCalendarControl(this);">
               </div>
               <div class="col-sm-2">
                 <form method="post">
                   <label for="todays-date">End Date:</label>
-                  <input id="todays-date" name="todays_date" onfocus="showCalendarControl(this);" size="8" type="text">
+                  <input id="end-date" form="query-builder" name="todays_date" onfocus="showCalendarControl(this);" size="8" type="text">
                 </form>
               </div>
               <div class="col-sm-1">
                 <label for="status">Status:</label>
-                <select id="timelist" onchange="selectStatus()">
+                <select id="enrollmentlist" form="query-builder" onchange="selectStatus()">
                   <option>None</option>
                   <option>Enrolled</option>
                   <option>Non-enrolled</option>
@@ -142,12 +141,15 @@
               </div>
               <div class="col-sm-1">
                 <label for="vendor">Vendor:</label>
-                <input type="text" size="8">
+                <input id="vendor-input"form="query-builder" type="text" size="8">
               </div>
               <div class="col-sm-1">
                 <label for="vendor">Source:</label>
-                <input type="text" size="8">
-              </div>              
+                <input id="source-input"form="query-builder" type="text" size="8">
+              </div> 
+              <div class="col-sm-1">
+                <button type="submit" form="query-builder" value="Submit" onclick="submitForm()">Generate Graph</button>
+              </div>          
             </div>            
           </div>
             <div class="chart-stage" id="chart-03">
