@@ -8,14 +8,14 @@ Keen.ready(function(){
 
 
 
-  var enrollments_time = new Keen.Query("count", {
+  var enrollments_top = new Keen.Query("count", {
     eventCollection: "enrollments",
     interval: "hourly",
     timeframe: "this_2_days",
     timezone: "UTC"
   });
   
-  client.draw(enrollments_time, document.getElementById("chart-03"), {
+  client.draw(enrollments_top, document.getElementById("chart-03"), {
     chartType: "linechart",
     title: false,
     height: 250,
@@ -31,7 +31,14 @@ Keen.ready(function(){
     }
   });
 
-  client.draw(enrollments_time, document.getElementById("chart-01"), {
+  var enrollments_bottom = new Keen.Query("count", {
+    eventCollection: "enrollments",
+    interval: "daily",
+    timeframe: "this_2_days",
+    timezone: "UTC"
+  });
+
+  client.draw(enrollments_bottom, document.getElementById("chart-01"), {
     chartType: "linechart",
     title: false,
     height: 250,
@@ -160,10 +167,8 @@ function selectlist() {
 
 function updateGraph(x) {
   var timeinterval = x.toLowerCase();
-  alert(timeinterval);
 
   Keen.ready(function() {
-    alert(timeinterval + " asdf");
     var query = new Keen.Query("count", {
       eventCollection: "enrollments",
       interval: timeinterval,
