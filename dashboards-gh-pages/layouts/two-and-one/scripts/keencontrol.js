@@ -6,6 +6,8 @@ var client = new Keen({
 Keen.ready(function(){
 
 
+
+
   var enrollments_time = new Keen.Query("count", {
     eventCollection: "enrollments",
     interval: "hourly",
@@ -29,7 +31,23 @@ Keen.ready(function(){
     }
   });
 
-  var pageviews_static = new Keen.Query("count", {
+  client.draw(enrollments_time, document.getElementById("chart-01"), {
+    chartType: "linechart",
+    title: false,
+    height: 250,
+    width: "auto",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "80%"
+      },
+      isStacked: true
+    }
+  });
+
+  var state_chart = new Keen.Query("count", {
     eventCollection: "enrollments",
     groupBy: "BillingAddress.State",
     timeframe: {
@@ -37,10 +55,10 @@ Keen.ready(function(){
       end: "2015-07-22T00:00:00.000Z"
     }
   });
-  client.draw(pageviews_static, document.getElementById("chart-02"), {
+  client.draw(state_chart, document.getElementById("state-chart"), {
     chartType: "piechart",
     title: false,
-    height: 250,
+    height: "auto",
     width: "auto",
     chartOptions: {
       chartArea: {
@@ -62,10 +80,58 @@ Keen.ready(function(){
     timezone: "UTC"
   });
   
-  client.draw(enrollments_vendorid, document.getElementById("chart-01"), {
+  client.draw(enrollments_vendorid, document.getElementById("vendor-chart"), {
     chartType: "piechart",
     title: false,
-    height: 250,
+    height: "auto",
+    width: "auto",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      },
+      pieHole: .4
+    }
+  });
+
+  var existingcustomer_query = new Keen.Query("count", {
+    eventCollection: "enrollments",
+    groupBy: "CompanyDetails.ExistingCustomer",
+    targetProperty: "CompanyDetails.ExistingCustomer",
+    timeframe: "this_2_days",
+    timezone: "UTC"
+  })
+
+  client.draw(existingcustomer_query, document.getElementById("status-chart"), {
+    chartType: "piechart",
+    title: false,
+    height: "auto",
+    width: "auto",
+    chartOptions: {
+      chartArea: {
+        height: "85%",
+        left: "5%",
+        top: "5%",
+        width: "100%"
+      },
+      pieHole: .4
+    }
+  });
+
+  var channel_query = new Keen.Query("count", {
+    eventCollection: "enrollments",
+    groupBy: "CompanyDetails.ChannelCode",
+    targetProperty: "CompanyDetails.ChannelCode",
+    timeframe: "this_2_days",
+    timezone: "UTC"
+  })
+
+  client.draw(channel_query, document.getElementById("channel-chart"), {
+    chartType: "piechart",
+    title: false,
+    height: "auto",
     width: "auto",
     chartOptions: {
       chartArea: {
@@ -79,6 +145,10 @@ Keen.ready(function(){
   });
 
 });
+
+
+
+
 
 function selectlist() {
   var time = document.getElementById("timelist");
