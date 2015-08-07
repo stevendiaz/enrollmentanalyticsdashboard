@@ -156,7 +156,7 @@ Keen.ready(function(){
 function submitForm() {
   var vendor = document.getElementById("vendor-input").value;
   var source = document.getElementById("source-input").value;
-  var startdate = document.getElementById("start-date").value
+  var startdate = document.getElementById("start-date").value;
 }
 
 
