@@ -5,9 +5,6 @@ var client = new Keen({
 
 Keen.ready(function(){
 
-
-
-
   var enrollments_top = new Keen.Query("count", {
     eventCollection: "enrollments",
     interval: "hourly",
